@@ -17,7 +17,7 @@ router.get('/employees', auth, async (req, res) => {
 
 // 4. POST /api/v1/emp/employees
 // create new employee
-router.post('/employees',
+router.post('/employees', auth,
     [
         body('first_name').notEmpty().withMessage('First Name is required'),
         body('last_name').notEmpty().withMessage('Last Name is required'),
@@ -71,7 +71,7 @@ router.get('/employees/:eid', async (req, res) => {
 });
 
 // 6. PUT /api/v1/emp/employees/:eid
-router.put('/employees/:eid', async (req, res) => {
+router.put('/employees/:eid', auth, async (req, res) => {
     try {
         const updated = await Employee.findByIdAndUpdate(req.params.eid, req.body, { new: true });
         if (!updated) {
@@ -84,7 +84,7 @@ router.put('/employees/:eid', async (req, res) => {
 });
 
 // 7. DELETE /api/v1/emp/employees?eid=xxx
-router.delete('/employees', async (req, res) => {
+router.delete('/employees', auth, async (req, res) => {
     try {
         const eid = req.query.eid;
         if (!eid) {

@@ -71,14 +71,15 @@ router.post('/login',
                 return res.status(400).json({ status: false, message: 'Invalid Username and password' });
             }
 
+            // token
             const token = jwt.sign(
                 { userId: user._id, email: user.email },
-                process.env.JWT_SECRET, // make sure this is in your .env
+                process.env.JWT_SECRET,
                 { expiresIn: '7d' }
             );
 
             // success 200
-            res.status(200).json({ message: 'Login successful.' });
+            res.status(200).json({ message: 'Login successful.', token });
         } catch (err) {
             res.status(500).json({ message: 'Server error', error: err.message });
         }
