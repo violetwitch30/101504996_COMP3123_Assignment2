@@ -1,0 +1,130 @@
+/* Login, Signup, Employee Form */
+.auth-container {
+    width: 350px;
+    margin: 60px auto;
+    padding: 30px;
+    background: #f8f9ff;
+    border-radius: 12px;
+    text-align: center;
+}
+
+/* INPUTS */
+.input,
+.auth-input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+/* login and signup links */
+.auth-link {
+    display: block;
+    margin-top: 12px;
+    text-align: center;
+}
+
+/* BUTTONS */
+.btn,
+.btn-blue,
+.btn-red {
+    width: auto;
+    padding: 10px 14px;
+    margin-top: 0;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    color: white;
+}
+
+.auth-button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+}
+
+.box button {
+    margin-top: 15px;
+}
+
+.btn-blue {
+    background: #1565c0;
+}
+
+.btn-blue:hover {
+    background: #0d47a1;
+}
+
+.btn-red {
+    background: #c62828;
+}
+
+.btn-red:hover {
+    background: #8e1e1e;
+}
+
+/* GENERIC BOX (Employee Page / Forms) */
+.box {
+    width: 90%;
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 25px;
+    background: #f9faff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+/* PAGE WRAPPER */
+.page-container {
+    width: 90%;
+    max-width: 900px;
+    margin: 40px auto;
+}
+
+/* FLEX RIGHT */
+.flex-end {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* SEARCH BAR */
+.search-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+/* TABLE */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px;
+}
+
+.table th,
+.table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.table th {
+    background: #e3f2fd;
+}
+
+/* employee form */
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 15px;
+}
