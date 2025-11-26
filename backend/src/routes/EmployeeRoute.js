@@ -45,7 +45,7 @@ router.post('/employees', auth,
 
 // GET /api/v1/emp/employees/search?department=&position=
 // search employees by department or position
-router.get('/employees/search', async (req, res) => {
+router.get('/employees/search', auth, async (req, res) => {
     try {
         const { department, position } = req.query;
         const filter = {};
@@ -60,7 +60,7 @@ router.get('/employees/search', async (req, res) => {
 
 // 5. GET /api/v1/emp/employees/:eid
 // get employee by id
-router.get('/employees/:eid', async (req, res) => {
+router.get('/employees/:eid', auth, async (req, res) => {
     try {
         const emp = await Employee.findById(req.params.eid);
         if (!emp) return res.status(404).json({ message: 'Employee not found' });
