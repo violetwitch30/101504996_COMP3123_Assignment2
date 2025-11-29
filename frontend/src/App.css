@@ -126,3 +126,35 @@
     grid-template-columns: 1fr 1fr;
     gap: 20px 15px;
 }
+
+.profile-pic-container {
+    grid-column: span 2;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.profile-pic-label {
+    cursor: pointer;
+}
+
+.profile-pic-preview {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #1565c0;
+}
+
+.profile-pic-placeholder {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 2px dashed #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #999;
+    font-weight: bold;
+    font-size: 14px;
+}

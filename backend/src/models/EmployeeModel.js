@@ -8,6 +8,7 @@ const EmployeeSchema = new mongoose.Schema({
     salary: { type: Number, required: true },
     date_of_joining: { type: Date, required: true },
     department: { type: String, required: true },
+    profilePic: { type: String, required: false },
     created_at: { type: Date, default: Date.now },
     updated_at: { type: Date, default: Date.now }
 });

@@ -3,6 +3,17 @@ const { body, validationResult } = require('express-validator');
 const Employee = require('../models/EmployeeModel');
 const router = express.Router();
 const auth = require("../middleware/auth");
+const multer = require('multer');
+const path = require('path');
+
+const uploadPath = path.join(__dirname, '../uploads');
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => cb(null, uploadPath),
+    filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname),
+});
+
+const upload = multer({ storage });
 
 // 3. GET /api/v1/emp/employees
 // get all employees
@@ -17,7 +28,7 @@ router.get('/employees', auth, async (req, res) => {
 
 // 4. POST /api/v1/emp/employees
 // create new employee
-router.post('/employees', auth,
+router.post('/employees', auth, upload.single('profilePic'),
     [
         body('first_name').notEmpty().withMessage('First Name is required'),
         body('last_name').notEmpty().withMessage('Last Name is required'),
@@ -34,7 +45,11 @@ router.post('/employees', auth,
         }
 
         try {
-            const newEmp = new Employee(req.body);
+            const empData = req.body;
+            if (req.file) {
+                empData.profilePic = req.file.filename;
+            }
+            const newEmp = new Employee(empData);
             await newEmp.save();
             res.status(201).json({ message: 'Employee created successfully.', employee_id: newEmp._id });
         } catch (err) {
@@ -64,6 +79,10 @@ router.get('/employees/:eid', auth, async (req, res) => {
     try {
         const emp = await Employee.findById(req.params.eid);
         if (!emp) return res.status(404).json({ message: 'Employee not found' });
+        // attach full URL
+        if (emp.profilePic) {
+            emp.profilePic = `${req.protocol}://${req.get('host')}/uploads/${emp.profilePic}`;
+        }
         res.status(200).json(emp);
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -71,9 +90,13 @@ router.get('/employees/:eid', auth, async (req, res) => {
 });
 
 // 6. PUT /api/v1/emp/employees/:eid
-router.put('/employees/:eid', auth, async (req, res) => {
+router.put('/employees/:eid', auth, upload.single('profilePic'), async (req, res) => {
     try {
-        const updated = await Employee.findByIdAndUpdate(req.params.eid, req.body, { new: true });
+        const updateData = req.body;
+        if (req.file) {
+            updateData.profilePic = req.file.filename;
+        }
+        const updated = await Employee.findByIdAndUpdate(req.params.eid, updateData, { new: true });
         if (!updated) {
             return res.status(404).json({ message: 'Employee not found' });
         }

@@ -89,6 +89,7 @@ export default function Employees() {
             <table className="table">
                 <thead>
                 <tr>
+                    <th>Photo</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Position</th>
@@ -101,6 +102,17 @@ export default function Employees() {
                 <tbody>
                 {employees.map((e) => (
                     <tr key={e._id}>
+                        <td>
+                            {e.profilePic && (
+                                <img
+                                    src={e.profilePic.startsWith('http')
+                                        ? e.profilePic
+                                        : `http://localhost:5000/uploads/${e.profilePic}`}
+                                    alt="profile"
+                                    style={{ width: "60px", height: "60px", borderRadius: "50%" }}
+                                />
+                            )}
+                        </td>
                         <td>{e.first_name} {e.last_name}</td>
                         <td>{e.email}</td>
                         <td>{e.position}</td>

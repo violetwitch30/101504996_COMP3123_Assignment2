@@ -36,10 +36,25 @@ export default function EmployeePage() {
 
     const handleSubmit = async () => {
         try {
+            const formData = new FormData();
+            Object.keys(employee).forEach(key => {
+                if (key !== "profilePic") {
+                    formData.append(key, employee[key]);
+                }
+            });
+
+            if (employee.profilePic instanceof File) {
+                formData.append("profilePic", employee.profilePic);
+            }
+
             if (id) {
-                await API.put(`/api/v1/emp/employees/${id}`, employee);
+                await API.put(`/api/v1/emp/employees/${id}`, formData, {
+                    headers: { "Content-Type": "multipart/form-data" }
+                });
             } else {
-                await API.post("/api/v1/emp/employees", employee);
+                await API.post("/api/v1/emp/employees", formData, {
+                    headers: { "Content-Type": "multipart/form-data" }
+                });
             }
             navigate("/employees");
         } catch (err) {
@@ -103,6 +118,31 @@ export default function EmployeePage() {
                     placeholder="Date of Joining"
                     value={employee.date_of_joining || ""}
                     onChange={handleChange}
+                />
+            </div>
+
+            <div className="profile-pic-container">
+                <label htmlFor="profilePic" className="profile-pic-label">
+                    {employee.profilePic ? (
+                        <img
+                            src={typeof employee.profilePic === "string"
+                                ? employee.profilePic.startsWith('http')
+                                    ? employee.profilePic
+                                    : `http://localhost:5000/uploads/${employee.profilePic}`
+                                : URL.createObjectURL(employee.profilePic)}
+                            alt="preview"
+                            className="profile-pic-preview"
+                        />
+                    ) : (
+                        <div className="profile-pic-placeholder">Upload</div>
+                    )}
+                </label>
+                <input
+                    id="profilePic"
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => setEmployee({ ...employee, profilePic: e.target.files[0] })}
+                    style={{ display: "none" }}
                 />
             </div>
 
