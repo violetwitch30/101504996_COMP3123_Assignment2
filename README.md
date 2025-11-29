@@ -1,5 +1,5 @@
 # 101504996_COMP3123_Assignment2
-## Fidan Zeynalli - 101504996
+Fidan Zeynalli - 101504996
 
 ## How to run:
 In the terminal: `docker-compose up --build`
